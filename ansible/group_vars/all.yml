@@ -1,0 +1,6 @@
+---
+app_image: "ghcr.io/gordigranat-ai/devops-ci-app"
+app_tag: "3f2e40cdada8081054952f03a289e7e665543179"
+app_container_name: "devops-ci-app"
+app_host_port: 5000
+app_internal_port: 5000
