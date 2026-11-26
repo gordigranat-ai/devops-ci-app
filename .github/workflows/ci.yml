@@ -126,12 +126,18 @@ jobs:
     env:
       VM_HOST: 192.168.56.101
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
+      - name: Fetch commit under test
+        run: |
+          set -euo pipefail
+          rm -rf "$RUNNER_TEMP/devops-ci-app"
+          git init -q "$RUNNER_TEMP/devops-ci-app"
+          cd "$RUNNER_TEMP/devops-ci-app"
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git fetch -q --depth 1 origin "${GITHUB_SHA}"
+          git checkout -q FETCH_HEAD
+          git log --oneline -1
       - name: Deploy with Ansible
-        working-directory: ansible
+        working-directory: ${{ runner.temp }}/devops-ci-app/ansible
         run: |
           set -euo pipefail
           ansible-playbook site.yml -e "app_tag=${GITHUB_SHA}"
