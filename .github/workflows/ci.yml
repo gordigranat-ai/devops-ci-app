@@ -127,7 +127,7 @@ jobs:
       VM_HOST: 192.168.56.101
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Deploy with Ansible
